@@ -19,7 +19,9 @@ number_vector * number_vector
 
 mixed_vector <- c(1, "boo", TRUE)
 
-#Now we'll look at some common functions in R
+#Now we'll look at some common functions in R. Remember that functions have arguments which are their inputs.
+
+seq(from = 1, to = 20, by = 2)
 
 mean(number_vector)
 sd(number_vector)
