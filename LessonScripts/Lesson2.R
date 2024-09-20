@@ -1,4 +1,4 @@
-#How to make different data types
+#How to make different data types----
 
 x <- 1
 y <- 0.5
@@ -8,7 +8,7 @@ class(y)
 
 z <- TRUE
 
-#Now let's take a look at vectors.
+#Now let's take a look at vectors.----
 
 number_vector <- c(0,1,2,3,4,5)
 
