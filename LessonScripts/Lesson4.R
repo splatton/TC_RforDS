@@ -54,7 +54,7 @@ flights |>
   group_by(month) |> 
   summarize(
     avg_delay = mean(dep_delay, na.rm = TRUE), 
-    n = n()
+    Count = n()
   )
 
 #Group by multiple variables
