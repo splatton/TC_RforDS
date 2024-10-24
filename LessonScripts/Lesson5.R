@@ -89,3 +89,4 @@ household |>
   rowwise() |>
   mutate(Variable = str_split(Variable, "_")[[1]][[1]]) |>
   pivot_wider(names_from = Variable, values_from = Data)
+
