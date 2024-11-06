@@ -16,7 +16,7 @@ students <- read_csv("https://pos.it/r4ds-students-csv")
 
 #Show how to find a path for a file
 
-students <- read_csv("data/students.csv", na = c("N/A", ""))
+students <- read_csv("https://pos.it/r4ds-students-csv", na = c("N/A", ""))
 
 #Take a look at the names with spaces - these have to be referred to with the back quotes
 
@@ -72,7 +72,7 @@ read_csv(
   skip = 2
 )
 
-#Could we use this with the skip argument?
+#Could we use this with the CDC data?
 
 #Can also use the comment argument
 
