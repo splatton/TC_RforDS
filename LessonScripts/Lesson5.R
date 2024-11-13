@@ -90,3 +90,22 @@ household |>
   mutate(Variable = str_split(Variable, "_")[[1]][[1]]) |>
   pivot_wider(names_from = Variable, values_from = Data)
 
+#Now let's look at pivot_wider
+
+cms_patient_experience |>
+  distinct(measure_cd, measure_title)
+
+cms_patient_experience |>
+  pivot_wider(
+    names_from = measure_cd,
+    values_from = prf_Rate
+  )
+
+cms_patient_experience |>
+  pivot_wider(
+    id_cols = starts_with("org"),
+    names_from = measure_cd,
+    values_from = prf_rate
+  )
+
+
