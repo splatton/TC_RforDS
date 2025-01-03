@@ -11,13 +11,13 @@ ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point(aes(color = class)) +
   geom_smooth(se = FALSE) +
   labs(
-    x = "Engine displacement (L)",
     y = "Highway fuel economy (mpg)",
     color = "Car type",
     title = "Fuel efficiency generally decreases with engine size",
     subtitle = "Two seaters (sports cars) are an exception because of their light weight",
     caption = "Data from fueleconomy.gov"
-  )
+  ) +
+  xlab("")
 
 # Annotations
 
@@ -117,11 +117,11 @@ base +
 
 # Legend appearance
 
-ggplot(mpg, aes(x = displ, y = hwy)) +
-  geom_point(aes(color = class)) +
-  geom_smooth(se = FALSE) +
-  theme(legend.position = "bottom") +
-  guides(color = guide_legend(nrow = 2, override.aes = list(size = 4)))
+ggplot(mpg, aes(x = displ, y = hwy, color = class, alpha = 0.01)) +
+  geom_point() +
+  geom_smooth(se = FALSE) #+
+  #theme(legend.position = "bottom") +
+  #guides(color = guide_legend(nrow = 2, override.aes = list(size = 4)))
 
 # Replacing a scale
 
@@ -137,7 +137,7 @@ presidential |>
   ggplot(aes(x = start, y = id, color = party)) +
   geom_point() +
   geom_segment(aes(xend = end, yend = id)) +
-  scale_color_manual(values = c(Republican = "#E81B23", Democratic = "#00AEF3"))
+  scale_color_manual(values = c(Republican = "lightgrey", Democratic = "#00AEF3"))
 
 # Zooming
 
@@ -175,7 +175,10 @@ ggplot(compact, aes(x = displ, y = hwy, color = drv)) +
 
 # Themes
 
-ggplot(mpg, aes(x = displ, y = hwy)) +
+p <- ggplot(mpg, aes(x = displ, y = hwy)) +
   geom_point(aes(color = class)) +
   geom_smooth(se = FALSE) +
-  theme_bw()
+  theme(panel.background = element_blank())
+
+# Let's play with patchwork!
+
