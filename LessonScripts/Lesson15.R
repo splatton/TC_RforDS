@@ -119,3 +119,25 @@ roc_curve_data <- mtcars %>%
 # Plot ROC Curve
 autoplot(roc_curve_data)
 
+#Another way we could make things simpler is to only try to distinguish Monday from Thursday (lowest volume) day.
+
+pt_volumes_simple <- pt_volumes |>
+  filter(wday(DOS) %in% c(2, 5))
+
+monday_model_simple <- glm(Monday ~ Volume*Season*FacilityName, pt_volumes_simple, family = "binomial")
+
+pt_volumes_pred <- pt_volumes_simple |>
+  mutate(Probs = predict(monday_model_simple, type = "response")) |>
+  mutate(Probs = 1- Probs) |>
+  mutate(Predicted_Class = ifelse(Probs <= 0.5, TRUE, FALSE)) |>
+  mutate(Predicted_Class = as.factor(Predicted_Class)) |>
+  mutate(Monday = as.factor(Monday))
+
+roc_curve_data <- pt_volumes_pred %>%
+  roc_curve(Probs, truth = Monday)
+
+# Plot ROC Curve
+autoplot(roc_curve_data)
+
+pt_volumes_pred %>%
+  roc_auc(truth = Monday, Probs)
