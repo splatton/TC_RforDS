@@ -78,8 +78,9 @@ wts <- ifelse(pt_volumes$Monday, round(1/(mean(pt_volumes$Monday))), 1)
 
 monday_model_wtd <- glm(Monday ~ Volume, pt_volumes, family = "binomial", weights = wts)
 
-mean(predict(monday_model, type = "response"))
+mean(predict(monday_model_wtd, type = "response"))
 
+#XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 #Next we will use the yardstick package (part of tidymodels) to generate a confusion matrix
 
 pt_volumes_pred <- pt_volumes_pred |>

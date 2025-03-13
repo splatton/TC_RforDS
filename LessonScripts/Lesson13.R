@@ -200,4 +200,5 @@ cooks.distance(season_model)
 
 library(mgcv)
 
-gam_model <- gam(Volume ~ s(Budget) + Other_Volume*Facility + s(Other_Volume), data = joined_data)
+gam_model <- gam(Volume ~ s(Budget) + Facility, data = joined_data)
+summary(gam_model)
