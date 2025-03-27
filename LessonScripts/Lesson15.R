@@ -142,3 +142,73 @@ autoplot(roc_curve_data)
 
 pt_volumes_pred %>%
   roc_auc(truth = Monday, Probs)
+
+#SMOTE
+
+install.packages("smotefamily")  # If not already installed
+library(smotefamily)
+
+#First we extract only predictors
+
+#We will need to one-hot encode our predictors first
+
+# Create a recipe
+rec <- recipe(~ ., data = pt_volumes) %>%
+  step_dummy(all_nominal(), one_hot = TRUE)
+
+# Prep the recipe
+rec_prep <- prep(rec)
+
+# Apply the recipe
+pt_volumes_encoded <- bake(rec_prep, new_data = NULL)
+
+# Separate features and target
+features <- select(pt_volumes_encoded, -c(DOS, Monday))
+target <- pt_volumes_encoded$Monday
+
+# Apply SMOTE
+smote_result <- SMOTE(X = features, target = target, K = 5, dup_size = 3)
+
+# Get new balanced data
+balanced_data <- smote_result$data
+balanced_data$class <- as.factor(balanced_data$class)
+table(balanced_data$class)
+
+#### Naive Bayes (refer back to textboox, page 198)
+
+library(e1071)
+
+data(iris)
+set.seed(123)  # For reproducibility
+
+# Split data into training and testing sets
+index <- sample(1:nrow(iris), 0.7 * nrow(iris))
+train_data <- iris[index, ]
+test_data <- iris[-index, ]
+
+model <- naiveBayes(Species ~ ., data = train_data)
+
+predictions <- predict(model, test_data)
+
+confusion_matrix <- table(predictions, test_data$Species)
+print(confusion_matrix)
+
+accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
+cat("Accuracy:", accuracy, "\n")
+
+#How Naive Bayes handles continuous variables
+
+library(ggplot2)
+
+data(iris)
+
+ggplot(iris, aes(x = Sepal.Length, fill = Species)) +
+  geom_density(alpha = 0.5) +
+  labs(title = "Density of Sepal Length by Species",
+       x = "Sepal Length",
+       y = "Density") +
+  theme_minimal()
+
+#Assumes independence of variables, easy and often quite accurate
+
+
